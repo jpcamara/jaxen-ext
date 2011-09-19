@@ -1,0 +1,2 @@
+Jaxen JavaBeanXPath is helpful for Object traversal, but does not support traversing java.util.Map, or accessing
+boolean properties that start with is/has. This enhancement adds support for those capabilities.
