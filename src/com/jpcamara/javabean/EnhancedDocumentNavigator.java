@@ -45,10 +45,6 @@ import org.jaxen.JaxenConstants;
 import org.jaxen.util.SingleObjectIterator;
 
 public class EnhancedDocumentNavigator extends DocumentNavigator {
-  /** Empty Class array. */
-  private static final Class[] EMPTY_CLASS_ARRAY = new Class[0];
-  private static final Class[] MAP_CLASS_ARRAY = new Class[] { Object.class };
-
   /** Empty Object array. */
   private static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];
   
@@ -64,45 +60,14 @@ public class EnhancedDocumentNavigator extends DocumentNavigator {
                                        String namespacePrefix,
                                        String namespaceURI) {
     Object currentObject = ((Element)contextNode).getObject();
-    Class cls = currentObject.getClass();
-    String methodName = javacase(localName);
-    Method method = null;
-    boolean isMap = false;
-
-    try {
-      if (currentObject instanceof Map) {
-        method = cls.getMethod("get", MAP_CLASS_ARRAY);
-        isMap = true;
-      } else {
-        method = cls.getMethod("get" + methodName, EMPTY_CLASS_ARRAY);
-      }
-    } catch (NoSuchMethodException e) {
-      try {
-        method = cls.getMethod("get" + methodName + "s", EMPTY_CLASS_ARRAY);
-      } catch (NoSuchMethodException ee) {
-        try {
-          method = cls.getMethod("is" + methodName, EMPTY_CLASS_ARRAY);
-        } catch (NoSuchMethodException eee) {
-          try {
-            method = cls.getMethod("has" + methodName, EMPTY_CLASS_ARRAY);
-          } catch (NoSuchMethodException eeee) {
-            try {
-              method = cls.getMethod(localName, EMPTY_CLASS_ARRAY);
-            } catch (NoSuchMethodException eeeee) {
-              method = null;
-            }
-          }
-        }
-      }
-    }
-
+    Method method = Accessor.findGetter(currentObject, localName);
     if (method == null) {
       return JaxenConstants.EMPTY_ITERATOR;
     }
 
     try {
       Object result = null;
-      if (isMap) {
+      if (currentObject instanceof Map) {
         result = method.invoke(currentObject, new Object[] { localName });
       } else {
         result = method.invoke(currentObject, EMPTY_OBJECT_ARRAY);

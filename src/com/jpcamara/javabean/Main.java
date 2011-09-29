@@ -38,12 +38,24 @@ public class Main {
     EnhancedJavaBeanXPath nested = new EnhancedJavaBeanXPath("nestedMappy/nestedKey[2]/key2[2]");
     
     System.out.println(root.getObject());
+    
+    long startTime = System.currentTimeMillis();
     System.out.println(((Element)primitiveBool.selectSingleNode(root)).getObject() );
     System.out.println(((Element)boxedBool.selectSingleNode(root)).getObject());
     System.out.println(((Element)hasBool.selectSingleNode(root)).getObject());
     System.out.println(((Element)mapValue.selectSingleNode(root)).getObject());
     System.out.println(((Element)listValue.selectSingleNode(root)).getObject());
     System.out.println(((Element)nested.selectSingleNode(root)).getObject());
+    System.out.println("Time to run: " + (System.currentTimeMillis() - startTime));
+    
+    startTime = System.currentTimeMillis();
+    System.out.println(((Element)primitiveBool.selectSingleNode(root)).getObject() );
+    System.out.println(((Element)boxedBool.selectSingleNode(root)).getObject());
+    System.out.println(((Element)hasBool.selectSingleNode(root)).getObject());
+    System.out.println(((Element)mapValue.selectSingleNode(root)).getObject());
+    System.out.println(((Element)listValue.selectSingleNode(root)).getObject());
+    System.out.println(((Element)nested.selectSingleNode(root)).getObject());
+    System.out.println("Time to run: " + (System.currentTimeMillis() - startTime));
   }
   
   private static class Bean {
