@@ -33,6 +33,7 @@ package com.jpcamara.javabean;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Collection;
 import java.util.Map;
@@ -77,12 +78,13 @@ public class EnhancedDocumentNavigator extends DocumentNavigator {
         return JaxenConstants.EMPTY_ITERATOR;
       } 
 
-      if (result instanceof Collection) {
-        return new ElementIterator( (Element) contextNode, localName, ((Collection)result).iterator() );
+      if (result.getClass().isArray()) {
+        result = Arrays.asList((Object[])result);
+        //return JaxenConstants.EMPTY_ITERATOR;
       }
 
-      if (result.getClass().isArray()) {
-        return JaxenConstants.EMPTY_ITERATOR;
+      if (result instanceof Collection) {
+        return new ElementIterator( (Element) contextNode, localName, ((Collection)result).iterator() );
       }
 
       return new SingleObjectIterator( new Element( (Element) contextNode, localName, result ) );

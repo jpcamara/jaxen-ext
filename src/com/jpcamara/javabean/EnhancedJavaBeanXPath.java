@@ -51,7 +51,7 @@ import java.util.Iterator;
 
 /** 
  * Enhancement of the JavaBeanXPath, that includes support for is/has boolean methods,
- * and accessing entries from Map objects. Had to include the full source and just change
+ * accessing entries from Map objects, and Array support. Had to include the full source and just change
  * the constructor since the original class didn't expose the full BaseXPath constructor.
  * @author JP Camara
  */

@@ -26,6 +26,7 @@ public class Main {
     ));
     beany.sweet = Boolean.TRUE;
     beany.awesomeness = Boolean.FALSE;
+    beany.nestedArray.put("accessToArray", new Integer[]{ 123123, 45435, 34983 });
     
     EnhancedJavaBeanXPath path = new EnhancedJavaBeanXPath(".");
     Element root = (Element)path.selectSingleNode(beany);
@@ -36,6 +37,8 @@ public class Main {
     EnhancedJavaBeanXPath mapValue = new EnhancedJavaBeanXPath("mappy/key1");
     EnhancedJavaBeanXPath listValue = new EnhancedJavaBeanXPath("otherMappy/listKey[1]");
     EnhancedJavaBeanXPath nested = new EnhancedJavaBeanXPath("nestedMappy/nestedKey[2]/key2[2]");
+    EnhancedJavaBeanXPath arrayAccess = new EnhancedJavaBeanXPath("stringsArray");
+    EnhancedJavaBeanXPath nestedArrayAccess = new EnhancedJavaBeanXPath("nestedArray/accessToArray[2]");
     
     System.out.println(root.getObject());
     
@@ -46,6 +49,9 @@ public class Main {
     System.out.println(((Element)mapValue.selectSingleNode(root)).getObject());
     System.out.println(((Element)listValue.selectSingleNode(root)).getObject());
     System.out.println(((Element)nested.selectSingleNode(root)).getObject());
+    System.out.println("Arrays");
+    System.out.println(((Element)arrayAccess.selectSingleNode(root)).getObject());
+    System.out.println(((Element)nestedArrayAccess.selectSingleNode(root)).getObject());
     System.out.println("Time to run: " + (System.currentTimeMillis() - startTime));
     
     startTime = System.currentTimeMillis();
@@ -55,6 +61,8 @@ public class Main {
     System.out.println(((Element)mapValue.selectSingleNode(root)).getObject());
     System.out.println(((Element)listValue.selectSingleNode(root)).getObject());
     System.out.println(((Element)nested.selectSingleNode(root)).getObject());
+    System.out.println(((Element)arrayAccess.selectSingleNode(root)).getObject());
+    System.out.println(((Element)nestedArrayAccess.selectSingleNode(root)).getObject());
     System.out.println("Time to run: " + (System.currentTimeMillis() - startTime));
   }
   
@@ -66,6 +74,8 @@ public class Main {
     private Map<String, List<String>> otherMappy = new HashMap<String, List<String>>();
     private Map<String, List<HashMap<String, List<String>>>> nestedMappy = 
       new HashMap<String, List<HashMap<String, List<String>>>>();
+    private String[] stringsArray = { "oh", "sure", "nice" };
+    private HashMap<String, Integer[]> nestedArray = new HashMap<String, Integer[]>();
     
     public boolean isGreat() {
       return great;
@@ -89,6 +99,14 @@ public class Main {
     
     public Map<String, List<HashMap<String, List<String>>>> getNestedMappy() {
       return nestedMappy;
+    }
+    
+    public HashMap<String, Integer[]> getNestedArray() {
+      return nestedArray;
+    }
+    
+    public String[] stringsArray() {
+      return stringsArray;
     }
   }
 }
